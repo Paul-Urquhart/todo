@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+    <title>Todo App</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>My Todo List</h1>
+
+<ul>
+    {% for todo in todos %}
+        <li>
+            {% if todo.done %}
+                <s>{{ todo.task }}</s>
+            {% else %}
+                {{ todo.task }}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
