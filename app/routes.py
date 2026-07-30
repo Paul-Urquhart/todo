@@ -1,0 +1,27 @@
+from app import app
+from flask import render_template, request, redirect
+
+todos = [
+    {"id": 1, "task": "Learn Flask", "done": True},
+    {"id": 2, "task": "Build a todo app", "done": False},
+    {"id": 3, "task": "Deploy with Docker", "done": False},
+]
+
+@app.route("/")
+def home():
+    return render_template("index.html", todos=todos)
+
+
+@app.route("/add", methods=["POST"])
+def add():
+    todo = request.form["task"]
+
+    new_task = {
+        "id": len(todos) + 1,
+        "task": todo,
+        "done": False
+    }
+
+    todos.append(new_task)
+
+    return redirect("/")
