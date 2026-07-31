@@ -25,3 +25,11 @@ def add():
     todos.append(new_task)
 
     return redirect("/")
+
+@app.route("/delete/<int:id>", methods=["POST"])
+def delete(id):
+    for i in range(len(todos)):
+        if todos[i]['id'] == id:
+            todos.pop(i)
+            break
+    return redirect("/")

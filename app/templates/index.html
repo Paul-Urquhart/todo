@@ -20,11 +20,14 @@
 <ul>
     {% for todo in todos %}
         <li>
-            {% if todo.done %}
-                <s>{{ todo.task }}</s>
-            {% else %}
-                {{ todo.task }}
-            {% endif %}
+            <form action="/delete/{{ todo.id }}" method="POST">
+                {% if todo.done %}
+                    <s>{{ todo.task }}</s>
+                {% else %}
+                    {{ todo.task }}
+                {% endif %}
+                <button type="submit">Delete</button>
+            </form>
         </li>
     {% endfor %}
 </ul>
