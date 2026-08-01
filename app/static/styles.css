@@ -5,8 +5,58 @@ body {
 
 h1 {
     color: darkblue;
+    text-align: center;
+    margin: 10px;
+}
+
+h2 {
+    color: blue;
 }
 
 li {
     margin: 10px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid black;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    width: 90px;
+}
+
+.button-complete {
+    background-color: green;
+}
+
+.button-delete {
+    background-color: red;
+}
+
+.button-add-task {
+    background-color: blue;
+}
+
+.button-undo {
+    background-color: orange;
 }

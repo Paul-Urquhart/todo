@@ -33,3 +33,13 @@ def delete(id):
             todos.pop(i)
             break
     return redirect("/")
+
+@app.route("/complete/<int:id>", methods=["POST"])
+def complete(id):
+    for i in range(len(todos)):
+        if todos[i]['id'] == id:
+            if todos[i]['done'] == False:
+                todos[i]['done'] = True
+            else:
+                todos[i]['done'] = False
+    return redirect("/")
