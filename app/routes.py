@@ -1,14 +1,20 @@
 from app import app
 from flask import render_template, request, redirect
+from .models import Todo
+from .db import Session
 
-todos = [
-    {"id": 1, "task": "Learn Flask", "done": True},
-    {"id": 2, "task": "Build a todo app", "done": False},
-    {"id": 3, "task": "Deploy with Docker", "done": False},
-]
+# todos = [
+#     {"id": 1, "task": "Learn Flask", "done": True},
+#     {"id": 2, "task": "Build a todo app", "done": False},
+#     {"id": 3, "task": "Deploy with Docker", "done": False},
+# ]
 
 @app.route("/")
 def home():
+    session = Session()
+    todos = session.query(Todo).order_by(Todo.id).all()
+    session.close()
+    
     return render_template("index.html", todos=todos)
 
 
