@@ -3,49 +3,50 @@ from flask import render_template, request, redirect
 from .models import Todo
 from .db import Session
 
-# todos = [
-#     {"id": 1, "task": "Learn Flask", "done": True},
-#     {"id": 2, "task": "Build a todo app", "done": False},
-#     {"id": 3, "task": "Deploy with Docker", "done": False},
-# ]
 
 @app.route("/")
 def home():
     session = Session()
-    todos = session.query(Todo).order_by(Todo.id).all()
-    session.close()
+    try:
+        todos = session.query(Todo).order_by(Todo.id).all()
+        return render_template("index.html", todos=todos)
+    finally:
+        session.close()
     
-    return render_template("index.html", todos=todos)
+    
 
 
 @app.route("/add", methods=["POST"])
 def add():
-    todo = request.form["task"]
+    new_task = Todo()
+    new_task.task = request.form["task"]
+    new_task.done = False
 
-    new_task = {
-        "id": len(todos) + 1,
-        "task": todo,
-        "done": False
-    }
-
-    todos.append(new_task)
+    session = Session()
+    try:
+        session.add(new_task)
+        session.commit()
+    finally:
+        session.close()
 
     return redirect("/")
 
 @app.route("/delete/<int:id>", methods=["POST"])
 def delete(id):
-    for i in range(len(todos)):
-        if todos[i]['id'] == id:
-            todos.pop(i)
-            break
+    session = Session()
+    todo = session.get(Todo, id)
+    if todo:
+        session.delete(todo)
+        session.commit()
+    session.close()
     return redirect("/")
 
 @app.route("/complete/<int:id>", methods=["POST"])
 def complete(id):
-    for i in range(len(todos)):
-        if todos[i]['id'] == id:
-            if todos[i]['done'] == False:
-                todos[i]['done'] = True
-            else:
-                todos[i]['done'] = False
+    session = Session()
+    todo = session.get(Todo, id)
+    if todo:
+        todo.done = not todo.done
+        session.commit()
+    session.close()
     return redirect("/")
