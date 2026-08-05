@@ -1,6 +1,7 @@
 from app.db import Base, engine
-from app.models import Todo
+import app.models
 
 Base.metadata.create_all(engine)
 
 print("Database created.")
+

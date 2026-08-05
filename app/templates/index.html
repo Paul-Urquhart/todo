@@ -31,6 +31,9 @@
                             {{ todo.task }}
                         {% endif %}
                     </span>
+                    <span>
+                        Due: {{ todo.due_date }}
+                    </span>
 
                     <div class="actions">
                         <form action="/delete/{{ todo.id }}" method="POST">
