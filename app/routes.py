@@ -8,7 +8,7 @@ from .db import Session
 def home():
     session = Session()
     try:
-        todos = session.query(Todo).order_by(Todo.id).all()
+        todos = session.query(Todo).order_by(Todo.due_date).all()
         return render_template("index.html", todos=todos)
     except Exception as e:
         app.logger.exception("Failed to get task list")
@@ -21,9 +21,9 @@ def home():
 @app.route("/add", methods=["POST"])
 def add():
     new_task = Todo()
-    new_task.task = request.form["task"]
+    new_task.task = request.form.get("task") or "New task"
     new_task.done = False
-    new_task.due_date = request.form["due_date"]
+    new_task.due_date = request.form.get("due_date") or None
 
     session = Session()
     try:
