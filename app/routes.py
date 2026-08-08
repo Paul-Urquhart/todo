@@ -1,10 +1,11 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, url_for
 from .models import Todo
 from .db import Session
 
+todo_bp = Blueprint("todo", __name__)
 
-@app.route("/")
+@todo_bp.route("/")
 def home():
     session = Session()
     try:
@@ -18,7 +19,7 @@ def home():
     
 
 
-@app.route("/add", methods=["POST"])
+@todo_bp.route("/add", methods=["POST"])
 def add():
     new_task = Todo()
     new_task.task = request.form.get("task") or "New task"
@@ -36,9 +37,9 @@ def add():
     finally:
         session.close()
 
-    return redirect("/")
+    return redirect(url_for('todo.home'))
 
-@app.route("/delete/<int:id>", methods=["POST"])
+@todo_bp.route("/delete/<int:id>", methods=["POST"])
 def delete(id):
     session = Session()
     try:
@@ -52,9 +53,9 @@ def delete(id):
         raise
     finally:
         session.close()
-    return redirect("/")
+    return redirect(url_for('todo.home'))
 
-@app.route("/complete/<int:id>", methods=["POST"])
+@todo_bp.route("/complete/<int:id>", methods=["POST"])
 def complete(id):
     session = Session()
     try:
@@ -68,4 +69,4 @@ def complete(id):
         raise
     finally:
         session.close()
-    return redirect("/")
+    return redirect(url_for('todo.home'))

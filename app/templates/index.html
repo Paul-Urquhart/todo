@@ -8,7 +8,7 @@
     <div class="container">
         <h1>My Todo List</h1>
         <h2>Create new task</h2>
-        <form class="todo-item" action="/add" method="POST">
+        <form class="todo-item" action="{{ url_for('todo.add') }}" method="POST">
             Enter todo item: 
             <input
                 type="text"
@@ -36,11 +36,11 @@
                     </span>
 
                     <div class="actions">
-                        <form action="/delete/{{ todo.id }}" method="POST">
+                        <form action="{{ url_for('todo.delete', id=todo.id) }}" method="POST">
                             <button class="button button-delete" type="submit">Delete</button>
                         </form>
 
-                        <form action="/complete/{{ todo.id }}" method="POST">
+                        <form action="{{ url_for('todo.complete', id=todo.id) }}" method="POST">
                             <button class="button {% if todo.done %}button-undo{% else %}button-complete{% endif %}" type="submit">
                                 {% if todo.done %}Undo{% else %}Complete{% endif %}
                             </button>
