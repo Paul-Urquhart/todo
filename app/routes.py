@@ -3,7 +3,12 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from .models import Todo
 from .db import Session
 
-todo_bp = Blueprint("todo", __name__)
+todo_bp = Blueprint(
+    "todo",
+    __name__,
+    static_folder="static",
+    static_url_path="/static"
+)
 
 @todo_bp.route("/")
 def home():

@@ -8,3 +8,9 @@ services:
 # Uncomment the two lines below if running on WSL
 #    extra_hosts:
 #      - "host.docker.internal:host-gateway"
+networks:
+  default:
+    name: todo-app-network
+    ipam:
+      config:
+        - subnet: 172.19.0.0/16
