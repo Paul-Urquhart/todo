@@ -1,0 +1,5 @@
+DB_CONNECTION_STRING=postgresql://todo_user:password@<Postgres_IP>/todo_db
+FLASK_SECRET_KEY=1234567890abcde.....
+
+# Create secret key with
+python -c "import secrets; print(secrets.token_hex(32))"
