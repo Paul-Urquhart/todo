@@ -1,11 +1,11 @@
 services:
   todo-app:
-    image: todo-app
+    image: todo-app:v1.0
     ports:
       - "5000:5000"
     env_file:
       - .env
-# Uncomment the two lines below if running on WSL
+# Uncomment these two lines below if running on WSL
 #    extra_hosts:
 #      - "host.docker.internal:host-gateway"
 networks:

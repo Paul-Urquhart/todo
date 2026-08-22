@@ -60,3 +60,27 @@ li {
 .button-undo {
     background-color: orange;
 }
+
+.login {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 16px;
+    margin-bottom: 40px;
+}
+
+.button-login {
+    background-color: green;
+}
+
+.button-signup {
+    background-color: blue;
+}
+
+.logout {
+    text-align: right;
+}
+
+.button-logout {
+    background-color: red;
+}

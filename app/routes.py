@@ -1,6 +1,6 @@
 from app import app
 from flask import Blueprint, render_template, request, redirect, url_for, session
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from .models import Todo, User
 from .db import Session
 from functools import wraps
@@ -115,8 +115,27 @@ def complete(id):
         db_session.close()
     return redirect(url_for('todo.home'))
 
+@todo_bp.route("/create_user", methods=["POST"])
+def create_user():
+    new_user = User()
+    new_user.username = request.form.get("username")
+    pw = request.form.get("password")
+    new_user.password_hash = generate_password_hash(pw)
 
-@todo_bp.route("/logout")
+    db_session = Session()
+    try:
+        db_session.add(new_user)
+        db_session.commit()
+    except Exception as e:
+        db_session.rollback()
+        app.logger.exception("Failed to create user")
+    finally:
+        db_session.close()
+
+    return redirect(url_for('todo.login'))
+
+
+@todo_bp.route("/logout", methods=["POST"])
 def logout():
     session.clear()
-    return redirect(url_for("todo.login"))
+    return redirect(url_for('todo.login'))

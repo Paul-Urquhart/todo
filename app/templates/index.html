@@ -6,7 +6,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>My Todo List</h1>
+        <form class="logout" action="{{ url_for('todo.logout') }}" method="POST">
+            <button class="button button-logout" type="submit">Logout</button>
+        </form>
+        <h1>Todo List</h1>
         <h2>Create new task</h2>
         <form class="todo-item" action="{{ url_for('todo.add') }}" method="POST">
             Enter todo item: 
@@ -31,11 +34,11 @@
                             {{ todo.task }}
                         {% endif %}
                     </span>
-                    <span>
-                        Due: {{ todo.due_date }}
-                    </span>
 
                     <div class="actions">
+                        <span>
+                            Due: {{ todo.due_date }}
+                        </span>
                         <form action="{{ url_for('todo.delete', id=todo.id) }}" method="POST">
                             <button class="button button-delete" type="submit">Delete</button>
                         </form>

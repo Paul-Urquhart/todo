@@ -2,22 +2,45 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('todo.static', filename='styles.css') }}">
 </head>
 <body>
     <h1>Login</h1>
+    <div class="login">
+        
+        <form action="{{ url_for('todo.login') }}" method="POST">
+            <label>
+                Username:
+                <input type="text" name="username" required>
+            </label>
 
-    <form action="{{ url_for('todo.login') }}" method="POST">
-        <label>
-            Username:
-            <input type="text" name="username" required>
-        </label>
+            <label>
+                Password:
+                <input type="password" name="password" required>
+            </label>
 
-        <label>
-            Password:
-            <input type="password" name="password" required>
-        </label>
+            <button class="button button-login" type="submit">Login</button>
+        </form>
 
-        <button type="submit">Login</button>
-    </form>
+    </div>
+
+    <h1>Signup</h1>
+    <div class="login">
+        
+
+        <form action="{{ url_for('todo.create_user') }}" method="POST">
+            <label>
+                Username:
+                <input type="text" name="username" required>
+            </label>
+
+            <label>
+                Password:
+                <input type="password" name="password" required>
+            </label>
+
+            <button class="button button-signup" type="submit">Signup</button>
+        </form>
+    </div>
 </body>
 </html>
