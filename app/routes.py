@@ -17,6 +17,7 @@ def require_login(func):
     def wrapper(*args, **kwargs):
         
         if "user_id" not in session:
+            app.logger.warning(f"user is not logged in; attempted to access function: {func.__name__}")
             return redirect(url_for('todo.login'))
     
         return func(*args, **kwargs)
@@ -27,6 +28,7 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        app.logger.info(f"login initiated for user: {username}")
         
         db_session = Session()
 
@@ -35,8 +37,12 @@ def login():
 
             if user and check_password_hash(user.password_hash, password):
                 session["user_id"] = user.id
+                app.logger.info(f"user logged in as: {username}")
                 return redirect(url_for('todo.home'))
-        except Exception as e:
+            else:
+                app.logger.error("Invalid username or password")
+                return "Invalid username or password"
+        except Exception:
             app.logger.exception(f"Failed login attempt for {username}")
             return "Unable to log in", 401
         finally:
@@ -51,10 +57,11 @@ def home():
     try:
         todos = db_session.query(Todo).order_by(Todo.due_date).filter_by(user_id=user_id).all()
         return render_template("index.html", todos=todos)
-    except Exception as e:
+    except Exception:
         app.logger.exception("Failed to get task list")
     finally:
         db_session.close()
+    return render_template("index.html")
     
     
 

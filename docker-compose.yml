@@ -1,6 +1,6 @@
 services:
   todo-app:
-    image: todo-app:v1.0.1
+    image: todo-app:v1.0.2
     ports:
       - "5000:5000"
     env_file:
