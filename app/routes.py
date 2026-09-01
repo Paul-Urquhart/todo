@@ -33,9 +33,11 @@ def login():
         db_session = Session()
 
         try:
+            app.logger.info("querying database for user login")
             user = db_session.query(User).filter_by(username=username).first()
 
             if user and check_password_hash(user.password_hash, password):
+                app.logger.info(f"user {username} authenticated")
                 session["user_id"] = user.id
                 app.logger.info(f"user logged in as: {username}")
                 return redirect(url_for('todo.home'))
