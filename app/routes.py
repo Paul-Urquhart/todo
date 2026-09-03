@@ -57,7 +57,7 @@ def home():
     user_id = session["user_id"]
     db_session = Session()
     try:
-        todos = db_session.query(Todo).order_by(Todo.due_date).filter_by(user_id=user_id).all()
+        todos = db_session.query(Todo).order_by(Todo.done, Todo.due_date).filter_by(user_id=user_id).all()
         return render_template("index.html", todos=todos)
     except Exception:
         app.logger.exception("Failed to get task list")
